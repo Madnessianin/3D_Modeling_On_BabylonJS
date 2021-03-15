@@ -15,7 +15,7 @@ const BtnLoader = () => {
     };
     return (
       <Upload {...props}>
-        <Button style={styleBtn()} type="primary" icon={<UploadOutlined />}>Upload data json</Button>
+        <Button style={styleBtn()} type="primary" icon={<UploadOutlined />}>Выбирете JSON файл данных шахты</Button>
       </Upload>
     );
 };
