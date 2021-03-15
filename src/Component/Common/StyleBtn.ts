@@ -1,6 +1,6 @@
 export const styleBtn = () : Object => ({
-    'fontSize': '20px',
+    'fontSize': '16px',
     'fontWeight': '500',
-    'height': '50px',
+    'height': '35px',
     'width': '300px'
 })

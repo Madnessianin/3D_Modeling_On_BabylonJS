@@ -6,12 +6,11 @@ import { styleBtn } from './StyleBtn';
 
 const BtnLoader = () => {
     const props = {
-      beforeUpload: (file: File) => {
+      beforeUpload: (file: File) : boolean => {
         if (file.type !== 'application/json') {
           message.error(`${file.name} is not a json file`);
         }
-        console.log(file.type)
-        return file.type === 'data/json' ? true : Upload.LIST_IGNORE;
+        return file.type ===  'application/json' ? true : false;
       }
     };
     return (
