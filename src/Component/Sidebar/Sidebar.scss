@@ -1,0 +1,13 @@
+.visible_btn_name {
+    position: relative;
+    top: -1px;
+    opacity: 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    transition: opacity .2s linear;
+
+    &--visible {
+        opacity: 1;
+    }
+}
