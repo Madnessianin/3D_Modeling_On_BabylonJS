@@ -1,7 +1,7 @@
 import React from "react";
 
 const ModelArea = () => {
-  return <div>ModelArea</div>;
+  return <div className="modelArea">ModelArea</div>;
 };
 
 export default ModelArea;

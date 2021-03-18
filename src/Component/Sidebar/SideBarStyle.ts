@@ -12,3 +12,9 @@ export const styleMenu: Object = {
     background: 'transparent', 
     border: 'none'
 }
+
+export const styleSidebar: Object = {
+    background: '#fff', 
+    height: '100%', 
+    padding: '10px'
+}

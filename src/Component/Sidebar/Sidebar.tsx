@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, Layout, Button } from "antd";
 import { SettingOutlined, MenuOutlined } from '@ant-design/icons';
 import './Sidebar.scss'
-import { styleBtn, styleMenu } from "./SideBarStyle";
+import { styleBtn, styleMenu, styleSidebar } from "./SideBarStyle";
 
 const { Sider } = Layout;
 
@@ -14,7 +14,7 @@ const Sidebar = () => {
   };
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapseMode} style={{background: '#fff', height: '100vh', padding: '10px'}}>
+    <Sider trigger={null} collapsible collapsed={collapseMode} style={styleSidebar}>
       <Button type="text" onClick={onClickCollapseeMode} style={styleBtn}>
         <MenuOutlined />
         <span className={`visible_btn_name ${!collapseMode ? 'visible_btn_name--visible' : ''}`}>Настройки</span>
