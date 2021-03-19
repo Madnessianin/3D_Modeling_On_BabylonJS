@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Menu, Layout, Button } from "antd";
 import { SettingOutlined, MenuOutlined } from '@ant-design/icons';
-import './Sidebar.scss'
 import { styleBtn, styleMenu, styleSidebar } from "./SideBarStyle";
 
 const { Sider } = Layout;

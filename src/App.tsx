@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.less";
-import "./App.scss";
+import "./assets/styles/App.scss";
 import { Redirect, Route, Switch } from "react-router";
 import ModelArea from "./Component/ModelArea/ModelArea";
 import Sidebar from "./Component/Sidebar/Sidebar";
