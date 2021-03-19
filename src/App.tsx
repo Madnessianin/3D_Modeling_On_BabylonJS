@@ -8,21 +8,26 @@ import Sidebar from "./Component/Sidebar/Sidebar";
 import Header from "./Component/Header/Header";
 const { Content, Footer } = Layout;
 
-
 const App = () => {
   return (
     <div className="app">
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Sidebar />
         <Layout className="site-layout">
           <Header />
           <Content>
             <Switch>
-              <Route exact path="/" render={() => <Redirect to="/modelarea" />} />
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/modelarea" />}
+              />
               <Route path="/modelarea" render={() => <ModelArea />} />
             </Switch>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>3D model mine ©2018 Created by Alex</Footer>
+          <Footer style={{ textAlign: "center" }}>
+            3D model mine ©2018 Created by Alex
+          </Footer>
         </Layout>
       </Layout>
     </div>
