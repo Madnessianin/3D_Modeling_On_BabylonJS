@@ -35,7 +35,6 @@ export const loadData = (fileName: string) => async (dispatch: any) => {
     const data =  await (
         await fetch(`http://localhost:5000/${fileName}`)
       ).json();
-    console.log(data)
     dispatch(setData(data));
 }
 
