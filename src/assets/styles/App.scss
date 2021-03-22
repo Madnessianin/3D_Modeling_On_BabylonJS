@@ -1,5 +1,9 @@
 @import "./vars.scss";
 
+.ant-upload-list {
+    display: none;
+}
+
 @import "./blocks/Header.scss";
 @import "./blocks/Sidebar.scss";
 @import "./blocks/ModelArea.scss";

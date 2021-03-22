@@ -1,18 +1,24 @@
 const  SET_DATA: string = '3dmodelingBabylonJS/SET_DATA' 
 
 const initialState: Object = {
-    data: {}
+    id: '',
+    title: '',
+    created: '',
+    updated: '',
+    nodes: []
 }
 
+type stateType = typeof initialState
 
-const mineReducer = (state: Object = initialState, action: any) => {
+const mineReducer = (state: Object = initialState, action: any): stateType => {
     switch (action.type) {
         case SET_DATA: {
             return {
                 ...state,
-                data: {
-                    ...action.data
-                }
+                ...action.data,
+                nodes: [
+                    ...action.data.nodes
+                ]
             }
         }
         default: {
@@ -22,5 +28,15 @@ const mineReducer = (state: Object = initialState, action: any) => {
 }
 
 export const setData = (data: Object) => ({type: SET_DATA, data})
+
+/* Thunk */
+
+export const loadData = (fileName: string) => async (dispatch: any) => {
+    const data =  await (
+        await fetch(`http://localhost:5000/${fileName}`)
+      ).json();
+    console.log(data)
+    dispatch(setData(data));
+}
 
 export default mineReducer;
