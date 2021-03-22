@@ -12,6 +12,8 @@ const Sidebar = () => {
     setCollapseMode(!collapseMode);
   };
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <Sider
       trigger={null}

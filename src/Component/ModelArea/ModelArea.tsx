@@ -71,7 +71,8 @@ const Canvas = (props) => {
         scene.onReadyObservable.addOnce((scene) => props.onSceneReady(scene));
       }
       engine.runRenderLoop(() => {
-        if (typeof onRender === "function") { // Запуск рендоринга
+        if (typeof onRender === "function") {
+          // Запуск рендоринга
           onRender(scene);
         }
         scene.render();

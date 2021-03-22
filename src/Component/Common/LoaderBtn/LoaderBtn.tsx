@@ -5,21 +5,19 @@ import { styleBtn } from "./StyleBtn";
 import { useDispatch } from "react-redux";
 import { loadData } from "../../../Redux/mineReducer";
 
-
 const BtnLoader = () => {
   const dispatch = useDispatch();
 
-  
   const dispatchFile = (file: File): boolean => {
-    if (file.type === 'application/json') {
-      dispatch(loadData(file.name))
-      return true
+    if (file.type === "application/json") {
+      dispatch(loadData(file.name));
+      return true;
     } else {
-      message.error('Выбран некорректный файл!')
-      return false
-    }    
-  }
-  
+      message.error("Выбран некорректный файл!");
+      return false;
+    }
+  };
+
   return (
     <Upload beforeUpload={dispatchFile}>
       <Button style={styleBtn} type="primary" icon={<UploadOutlined />}>
