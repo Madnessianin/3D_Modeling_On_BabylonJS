@@ -1,20 +1,20 @@
 import Modal from "antd/lib/modal/Modal";
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Button, Form, InputNumber } from "antd";
 import { useDispatch } from "react-redux";
 import { setScale } from "../../../Redux/mineReducer";
 
-const ModalForm = ({visible}) => {
+const ModalForm = ({ visible }) => {
   const [visibleMode, setVisibleMode] = useState(visible);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect((): void => {
     setVisibleMode(visible);
   }, [visible]);
 
   const onSubmit = (scale: Object): void => {
-    dispatch(setScale(scale))
-    setVisibleMode(false)
+    dispatch(setScale(scale));
+    setVisibleMode(false);
   };
 
   return (
@@ -25,37 +25,38 @@ const ModalForm = ({visible}) => {
       width="285px"
       footer={null}
     >
-      <ScaleForm onSubmit={onSubmit} />  
+      <ScaleForm onSubmit={onSubmit} />
     </Modal>
   );
 };
 
 ModalForm.PropTypes = {
-    visible: PropTypes.bool
-}
+  visible: PropTypes.bool,
+};
 
-const ScaleForm = ({onSubmit}) => {
-    return (
-        <Form className="modalForm"
-              name="scale">
-          <Form.Item name="scaleX" label="Масштаб по оси X: " initialValue={100}>
-            <InputNumber min={50} max={200} />
-          </Form.Item>
-          <Form.Item name="scaleY" label="Масштаб по оси Y: " initialValue={100}>
-            <InputNumber min={50} max={200} />
-          </Form.Item>
-          <Form.Item name="scaleZ" label="Масштаб по оси Z: " initialValue={10}>
-            <InputNumber min={5} max={50} />
-          </Form.Item>
-          <Form.Item>
-            <div className="modal_btn">
-              <Button type="primary" onClick={onSubmit}>Сохранить</Button>
-            </div>
-          </Form.Item>
-        </Form>
-    )
+const ScaleForm = ({ onSubmit }) => {
+  return (
+    <Form className="modalForm" name="scale" onFinish={onSubmit}>
+      <Form.Item name="scaleX" label="Масштаб по оси X: " initialValue={100}>
+        <InputNumber min={50} max={200} />
+      </Form.Item>
+      <Form.Item name="scaleY" label="Масштаб по оси Y: " initialValue={100}>
+        <InputNumber min={50} max={200} />
+      </Form.Item>
+      <Form.Item name="scaleZ" label="Масштаб по оси Z: " initialValue={10}>
+        <InputNumber min={5} max={50} />
+      </Form.Item>
+      <Form.Item>
+        <div className="modal_btn">
+          <Button type="primary" htmlType="submit">
+            Сохранить
+          </Button>
+        </div>
+      </Form.Item>
+    </Form>
+  );
 };
 ScaleForm.PropTypes = {
-  onSubmit: PropTypes.func
-}
+  onSubmit: PropTypes.func,
+};
 export default ModalForm;

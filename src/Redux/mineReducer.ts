@@ -10,15 +10,18 @@ const initialState: Object = {
   scale: {
     scaleX: 1,
     scaleY: 1,
-    scaleZ: 1
-  }
+    scaleZ: 1,
+  },
 };
 
 type stateType = typeof initialState;
 
-type actionTypes = setDataType | setScaleType
+type actionTypes = setDataType | setScaleType;
 
-const mineReducer = (state: Object = initialState, action: actionTypes): stateType => {
+const mineReducer = (
+  state: Object = initialState,
+  action: actionTypes
+): stateType => {
   switch (action.type) {
     case SET_DATA: {
       return {
@@ -31,9 +34,9 @@ const mineReducer = (state: Object = initialState, action: actionTypes): stateTy
       return {
         ...state,
         scale: {
-          ...action.scale
-        }
-      }  
+          ...action.scale,
+        },
+      };
     }
     default: {
       return state;
@@ -41,16 +44,19 @@ const mineReducer = (state: Object = initialState, action: actionTypes): stateTy
   }
 };
 
-export const setData = (data: Object): Object => ({type: SET_DATA, data });
+export const setData = (data: Object): Object => ({ type: SET_DATA, data });
 type setDataType = {
-  type: typeof SET_DATA,
-  data: Object
-}
-export const setScale = (scale: Object): Object => ({type: SET_SCALE_MINE, scale})
+  type: typeof SET_DATA;
+  data: Object;
+};
+export const setScale = (scale: Object): Object => ({
+  type: SET_SCALE_MINE,
+  scale,
+});
 type setScaleType = {
-  type: typeof SET_SCALE_MINE,
-  scale: Object
-}
+  type: typeof SET_SCALE_MINE;
+  scale: Object;
+};
 /* Thunk */
 
 export const loadData = (fileName: string) => async (dispatch: any) => {

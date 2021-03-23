@@ -16,8 +16,8 @@ const Sidebar = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onClick = (): void => {
-    setModalVisible(!modalVisible)
-  }
+    setModalVisible(!modalVisible);
+  };
 
   return (
     <Sider
