@@ -3,7 +3,11 @@
 .ant-upload-list {
   display: none;
 }
-
+.ant-modal-body {
+  height: 225px;
+  padding: 10px 32px;
+}
 @import "./blocks/Header.scss";
 @import "./blocks/Sidebar.scss";
 @import "./blocks/ModelArea.scss";
+@import "./blocks/Modal.scss";

@@ -33,8 +33,5 @@ const App = () => {
     </div>
   );
 };
-/*<Switch>
-                  <Route exact path="/" render={() => <Redirect to="/modelarea" />} />
-                  <Route path="/modelarea" render={() => <ModelArea />} />
-                </Switch>*/
+
 export default App;

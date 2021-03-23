@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Menu, Layout, Button } from "antd";
 import { SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import { styleBtn, styleMenu, styleSidebar } from "./SideBarStyle";
+import ModalForm from "./ModalForm/ModalForm";
 
 const { Sider } = Layout;
 
@@ -13,6 +14,10 @@ const Sidebar = () => {
   };
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const onClick = (): void => {
+    setModalVisible(!modalVisible)
+  }
 
   return (
     <Sider
@@ -32,10 +37,11 @@ const Sidebar = () => {
         </span>
       </Button>
       <Menu style={styleMenu}>
-        <Menu.Item key="1" icon={<SettingOutlined />}>
+        <Menu.Item key="1" icon={<SettingOutlined />} onClick={onClick}>
           Задать масштаб
         </Menu.Item>
       </Menu>
+      <ModalForm visible={modalVisible} />
     </Sider>
   );
 };
