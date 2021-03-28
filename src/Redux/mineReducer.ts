@@ -1,23 +1,29 @@
 const SET_DATA: string = "3dmodelingBabylonJS/SET_DATA",
   SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE";
 
+type pointType = {
+  x: number;
+  y: number;
+  z: number;
+};
+
 type elemType = {
   id: string;
-  point: {
-    x: number;
-    y: number;
-    z: number;
-  };
+  point: pointType;
   linkedNodes: Array<string>;
+};
+
+type dataType = {
+  id: string;
+  title: string;
+  created: string;
+  updated: string;
+  nodes: Array<elemType>;
 };
 
 const createConnection = (array: Array<elemType>): Array<{}> => {
   type arrayPoint = {
-    [key: string]: {
-      x: number;
-      y: number;
-      z: number;
-    };
+    [key: string]: pointType;
   };
   let arrayPoint: arrayPoint = {};
   const arraysLinks: Array<Array<string>> = [];
@@ -74,11 +80,13 @@ const createConnection = (array: Array<elemType>): Array<{}> => {
 };
 
 const initialState: Object = {
-  id: "",
-  title: "",
-  created: "",
-  updated: "",
-  nodes: [],
+  data: {
+    id: "",
+    title: "",
+    created: "",
+    updated: "",
+    nodes: [],
+  },
   scale: {
     scaleX: 1,
     scaleY: 1,
@@ -89,18 +97,22 @@ const initialState: Object = {
 
 type stateType = typeof initialState;
 
-type actionTypes = setDataType | setScaleType;
+type actionTypes = setDataType & setScaleType;
 
 const mineReducer = (
-  state: Object = initialState,
+  state: stateType = initialState,
   action: actionTypes
 ): stateType => {
   switch (action.type) {
     case SET_DATA: {
       return {
         ...state,
-        ...action.data,
-        nodes: [...action.data.nodes],
+        data: {
+          ...action.data,
+          nodes: [
+            ...action.data.nodes
+          ],
+        }
       };
     }
     case SET_SCALE_MINE: {
@@ -116,20 +128,24 @@ const mineReducer = (
     }
   }
 };
-
-export const setData = (data: Object): Object => ({ type: SET_DATA, data });
 type setDataType = {
   type: typeof SET_DATA;
-  data: Object;
+  data: dataType;
 };
-export const setScale = (scale: Object): Object => ({
+export const setData = (data: dataType): setDataType => ({
+  type: SET_DATA,
+  data,
+});
+
+type setScaleType = {
+  type: typeof SET_SCALE_MINE;
+  scale: pointType;
+};
+export const setScale = (scale: pointType): setScaleType => ({
   type: SET_SCALE_MINE,
   scale,
 });
-type setScaleType = {
-  type: typeof SET_SCALE_MINE;
-  scale: Object;
-};
+
 /* Thunk */
 
 export const loadData = (fileName: string) => async (dispatch: any) => {

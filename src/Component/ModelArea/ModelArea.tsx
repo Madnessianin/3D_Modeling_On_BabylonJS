@@ -7,14 +7,23 @@ import {
   Scene,
   Vector3,
 } from "@babylonjs/core";
-import React, { useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+
+type CanvasType = {
+  antialias: boolean;
+  onSceneReady: Function;
+  onRender: Function;
+  id: string;
+};
+
+interface RootState {
+  mine: Object
+}
 
 const ModelArea = () => {
   let box: Mesh;
-  const data = useSelector((state) => state.mine);
-  console.log(data);
+  const data = useSelector((state: RootState) => state.mine);
   const onSceneReady = (scene: Scene) => {
     const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene); // Камера (Vector3 - координаты точки(направления))
     camera.setTarget(Vector3.Zero()); // Направление камеры
@@ -47,13 +56,10 @@ const ModelArea = () => {
   );
 };
 
-const Canvas = ({
+const Canvas:FC<CanvasType> = ({
   antialias,
   onRender,
   onSceneReady,
-  sceneOptions,
-  engineOptions,
-  adaptToDeviceRatio,
   id,
   ...rest
 }) => {
@@ -63,11 +69,8 @@ const Canvas = ({
     if (reactCanvas.current) {
       const engine = new Engine(
         reactCanvas.current, // ссылка на контекс
-        antialias, // включение сглаживания
-        engineOptions, // дополнитедьные параметры движка
-        adaptToDeviceRatio // фдаптированость к конкретному устройству
-      );
-      const scene = new Scene(engine, sceneOptions);
+        antialias);
+      const scene = new Scene(engine);
       if (scene.isReady()) {
         onSceneReady(scene);
       } else {
@@ -101,11 +104,6 @@ const Canvas = ({
   return <canvas ref={reactCanvas} {...rest} />;
 };
 
-Canvas.PropTypes = {
-  antialias: PropTypes.bool,
-  onSceneReady: PropTypes.func,
-  onRender: PropTypes.func,
-  id: PropTypes.string,
-};
+
 
 export default ModelArea;
