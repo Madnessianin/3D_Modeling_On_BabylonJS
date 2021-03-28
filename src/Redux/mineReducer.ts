@@ -1,6 +1,6 @@
 const SET_DATA: string = "3dmodelingBabylonJS/SET_DATA",
-  SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE";
-
+  SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE",
+  SET_CONNECTIONS: string = "3dmodelingBabylonJS/SET_CONNECTIONS";
 type pointType = {
   x: number;
   y: number;
@@ -21,55 +21,64 @@ type dataType = {
   nodes: Array<elemType>;
 };
 
-const createConnection = (array: Array<elemType>): Array<{}> => {
-  type arrayPoint = {
+type connectElemType = {
+  id: string;
+  point: {
+    x: number;
+    y: number;
+    z: number;
+  };
+};
+
+type connectType = {
+  pointOne: connectElemType;
+  pointTwo: connectElemType;
+};
+
+const changePoint = (point: pointType, scale: pointType): pointType => {
+  const newPoint: pointType = {
+    x: point.x / scale.x,
+    y: point.y / scale.y,
+    z: point.z / scale.z
+  }
+  return newPoint
+}
+
+const createConnection = (array: Array<elemType>, scale: pointType): Array<connectType> => {
+  type listPoint = {
     [key: string]: pointType;
   };
-  let arrayPoint: arrayPoint = {};
+
+  let listPoint: listPoint = {};
   const arraysLinks: Array<Array<string>> = [];
   array.forEach((item) => {
-    const point = { [item.id]: item.point };
-    arrayPoint = {
-      ...arrayPoint,
+    const point = { [item.id]: changePoint(item.point, scale) };
+    listPoint = {
+      ...listPoint,
       ...point,
     };
     arraysLinks.push([...item.linkedNodes]);
   });
-  const arrayId: Array<string> = Object.keys(arrayPoint);
 
-  const arrayNodeId: Array<string> = [];
-
-  type connectElemType = {
-    id: string;
-    point: {
-      x: number;
-      y: number;
-      z: number;
-    };
-  };
-
-  type connectType = {
-    pointOne: connectElemType;
-    pointTwo: connectElemType;
-  };
-
+  const arrayIdPoint: Array<string> = Object.keys(listPoint);
+  const arrayIdProcessedPoint: Array<string> = [];
   const connections: Array<connectType> = [];
 
   arraysLinks.forEach((item, index) => {
-    arrayNodeId.push(arrayId[index]);
+    arrayIdProcessedPoint.push(arrayIdPoint[index]);
     item.forEach((elem) => {
-      if (arrayNodeId.indexOf(elem) === -1) {
+      if (arrayIdProcessedPoint.indexOf(elem) === -1) {
         connections.push({
           pointOne: {
-            id: arrayId[index],
+            id: arrayIdPoint[index],
             point: {
-              ...arrayPoint[arrayId[index]],
+              ...listPoint[arrayIdPoint[index]],
             },
           },
           pointTwo: {
             id: elem,
             point: {
-              ...arrayPoint[elem],
+              ...listPoint[elem],
             },
           },
         });
@@ -80,7 +89,7 @@ const createConnection = (array: Array<elemType>): Array<{}> => {
 };
 
 const initialState: Object = {
-  data: {
+  dataMine: {
     id: "",
     title: "",
     created: "",
@@ -88,16 +97,16 @@ const initialState: Object = {
     nodes: [],
   },
   scale: {
-    scaleX: 1,
-    scaleY: 1,
-    scaleZ: 1,
+    x: 100,
+    y: 100,
+    z: 10,
   },
   connections: [],
 };
 
 type stateType = typeof initialState;
 
-type actionTypes = setDataType & setScaleType;
+type actionTypes = setDataType & setScaleType & setConnectionsType;
 
 const mineReducer = (
   state: stateType = initialState,
@@ -107,7 +116,7 @@ const mineReducer = (
     case SET_DATA: {
       return {
         ...state,
-        data: {
+        dataMine: {
           ...action.data,
           nodes: [
             ...action.data.nodes
@@ -121,6 +130,14 @@ const mineReducer = (
         scale: {
           ...action.scale,
         },
+      };
+    }
+    case SET_CONNECTIONS: {
+      return {
+        ...state,
+        connections: [
+          ...action.connections
+        ],
       };
     }
     default: {
@@ -146,11 +163,33 @@ export const setScale = (scale: pointType): setScaleType => ({
   scale,
 });
 
+type setConnectionsType = {
+  type: typeof SET_CONNECTIONS,
+  connections: Array<connectType>
+}
+export const setConnections = (connections: Array<connectType>): setConnectionsType => ({
+  type: SET_CONNECTIONS,
+  connections
+})
+
 /* Thunk */
 
-export const loadData = (fileName: string) => async (dispatch: any) => {
+export const loadData = (fileName: string): Function => async (dispatch: Function) => {
   const data = await (await fetch(`http://localhost:5000/${fileName}`)).json();
   dispatch(setData(data));
+  dispatch(changeConnections())
 };
+
+export const changeConnections = (): Function => (dispatch: Function, getState: Function) => {
+  const nodes: Array<elemType> = getState().mine.dataMine.nodes;
+  const scale: pointType = getState().mine.scale;
+  const connections: Array<connectType> = createConnection(nodes, scale);
+  dispatch(setConnections(connections));
+}
+
+export const changeScale = (scale: pointType): Function => (dispatch: Function) => {
+  dispatch(setScale(scale))
+  dispatch(changeConnections())
+}
 
 export default mineReducer;

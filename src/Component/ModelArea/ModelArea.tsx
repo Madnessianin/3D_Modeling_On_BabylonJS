@@ -24,6 +24,7 @@ interface RootState {
 const ModelArea = () => {
   let box: Mesh;
   const data = useSelector((state: RootState) => state.mine);
+  console.log(data);
   const onSceneReady = (scene: Scene) => {
     const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene); // Камера (Vector3 - координаты точки(направления))
     camera.setTarget(Vector3.Zero()); // Направление камеры
