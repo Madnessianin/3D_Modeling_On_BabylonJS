@@ -21,7 +21,7 @@ interface RootState {
   mine: Object
 }
 
-const ModelArea = () => {
+const ModelArea:FC = () => {
   let box: Mesh;
   const data = useSelector((state: RootState) => state.mine);
   console.log(data);

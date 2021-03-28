@@ -1,18 +1,32 @@
 import Modal from "antd/lib/modal/Modal";
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useEffect, useState } from "react";
 import { Button, Form, InputNumber } from "antd";
 import { useDispatch } from "react-redux";
 import { setScale } from "../../../Redux/mineReducer";
 
-const ModalForm = ({ visible }) => {
+type ModalFormType = {
+  visible: boolean
+}
+
+type ScaleForm = {
+  onSubmit: Function
+}
+
+type scaleType = {
+  x: number,
+  y: number,
+  z: number
+}
+
+const ModalForm:FC<ModalFormType> = ({ visible }) => {
   const [visibleMode, setVisibleMode] = useState(visible);
   const dispatch = useDispatch();
+
   useEffect((): void => {
     setVisibleMode(visible);
   }, [visible]);
 
-  const onSubmit = (scale: Object): void => {
+  const onSubmit = (scale: scaleType): void => {
     dispatch(setScale(scale));
     setVisibleMode(false);
   };
@@ -30,11 +44,9 @@ const ModalForm = ({ visible }) => {
   );
 };
 
-ModalForm.PropTypes = {
-  visible: PropTypes.bool,
-};
 
-const ScaleForm = ({ onSubmit }) => {
+
+const ScaleForm:FC<ScaleForm> = ({ onSubmit }) => {
   return (
     <Form className="modalForm" name="scale" onFinish={onSubmit}>
       <Form.Item name="scaleX" label="Масштаб по оси X: " initialValue={100}>
@@ -56,7 +68,5 @@ const ScaleForm = ({ onSubmit }) => {
     </Form>
   );
 };
-ScaleForm.PropTypes = {
-  onSubmit: PropTypes.func,
-};
+
 export default ModalForm;
