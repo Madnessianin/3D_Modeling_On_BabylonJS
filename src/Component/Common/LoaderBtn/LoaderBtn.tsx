@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { styleBtn } from "./StyleBtn";
 import { useDispatch } from "react-redux";
 import { loadData } from "../../../Redux/mineReducer";
 
-const BtnLoader = () => {
+const BtnLoader:FC = () => {
   const dispatch = useDispatch();
 
   const dispatchFile = (file: File): boolean => {

@@ -1,15 +1,15 @@
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useEffect, useState } from "react";
+import React, { EffectCallback, FC, useEffect, useState } from "react";
 import { Button, Form, InputNumber } from "antd";
 import { useDispatch } from "react-redux";
-import { setScale } from "../../../Redux/mineReducer";
+import { changeScale } from "../../../Redux/mineReducer";
 
 type ModalFormType = {
   visible: boolean
 }
 
 type ScaleForm = {
-  onSubmit: Function
+  onSubmit: any
 }
 
 type scaleType = {
@@ -27,13 +27,13 @@ const ModalForm:FC<ModalFormType> = ({ visible }) => {
   }, [visible]);
 
   const onSubmit = (scale: scaleType): void => {
-    dispatch(setScale(scale));
+    dispatch(changeScale(scale));
     setVisibleMode(false);
   };
 
   return (
     <Modal
-      title="Изменить масштаб: "
+      title="Уменьшить масштаб: "
       visible={visibleMode}
       centered
       width="285px"

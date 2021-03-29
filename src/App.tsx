@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.less";
 import "./assets/styles/App.scss";
@@ -8,7 +8,7 @@ import Sidebar from "./Component/Sidebar/Sidebar";
 import Header from "./Component/Header/Header";
 const { Content, Footer } = Layout;
 
-const App = () => {
+const App:FC = () => {
   return (
     <div className="app">
       <Layout style={{ minHeight: "100vh" }}>

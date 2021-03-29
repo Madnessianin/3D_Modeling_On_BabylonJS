@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { Menu, Layout, Button } from "antd";
 import { SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import { styleBtn, styleMenu, styleSidebar } from "./SideBarStyle";
@@ -6,7 +6,7 @@ import ModalForm from "./ModalForm/ModalForm";
 
 const { Sider } = Layout;
 
-const Sidebar = () => {
+const Sidebar:FC = () => {
   const [collapseMode, setCollapseMode] = useState(false);
 
   const onClickCollapseeMode = () => {

@@ -1,39 +1,9 @@
+import { connectType, dataType, elemType, pointType, stateMineType } from "./types";
+
 const SET_DATA: string = "3dmodelingBabylonJS/SET_DATA",
   SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE",
   SET_CONNECTIONS: string = "3dmodelingBabylonJS/SET_CONNECTIONS";
-type pointType = {
-  x: number;
-  y: number;
-  z: number;
-};
 
-type elemType = {
-  id: string;
-  point: pointType;
-  linkedNodes: Array<string>;
-};
-
-type dataType = {
-  id: string;
-  title: string;
-  created: string;
-  updated: string;
-  nodes: Array<elemType>;
-};
-
-type connectElemType = {
-  id: string;
-  point: {
-    x: number;
-    y: number;
-    z: number;
-  };
-};
-
-type connectType = {
-  pointOne: connectElemType;
-  pointTwo: connectElemType;
-};
 
 const changePoint = (point: pointType, scale: pointType): pointType => {
   const newPoint: pointType = {
@@ -104,7 +74,7 @@ const initialState: Object = {
   connections: [],
 };
 
-type stateType = typeof initialState;
+type stateType = typeof initialState | stateMineType;
 
 type actionTypes = setDataType & setScaleType & setConnectionsType;
 

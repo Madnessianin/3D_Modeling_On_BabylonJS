@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { Layout } from "antd";
 import BtnLoader from "./../Common/LoaderBtn/LoaderBtn";
 
 const { Header } = Layout;
 
-const HeaderConteiner = () => {
+const HeaderConteiner:FC = () => {
   return (
     <Header className="header">
       <div className="header_inner">
