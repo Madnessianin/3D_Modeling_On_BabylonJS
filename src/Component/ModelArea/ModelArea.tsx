@@ -9,6 +9,8 @@ import {
 } from "@babylonjs/core";
 import React, { FC, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { getConnections } from "../../Redux/mineSelectors";
+import { stateType } from "../../Redux/types";
 
 type CanvasType = {
   antialias: boolean;
@@ -17,13 +19,11 @@ type CanvasType = {
   id: string;
 };
 
-interface RootState {
-  mine: Object
-}
+
 
 const ModelArea:FC = () => {
   let box: Mesh;
-  const data = useSelector((state: RootState) => state.mine);
+  const data = useSelector((state: stateType) => getConnections(state));
   console.log(data);
   const onSceneReady = (scene: Scene) => {
     const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene); // Камера (Vector3 - координаты точки(направления))
