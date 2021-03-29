@@ -1,0 +1,72 @@
+/* indentation */
+/* colors */
+/* Shodows */
+.ant-upload-list {
+  display: none; }
+
+.ant-modal-body {
+  height: 225px;
+  padding: 10px 32px; }
+
+.header {
+  padding: 0 100px;
+  height: 64px; }
+
+.header_inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.header_title {
+  position: relative;
+  top: -3px;
+  z-index: 2;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  text-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #fff; }
+
+.visible_btn_name {
+  position: relative;
+  top: -1px;
+  opacity: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  -webkit-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear; }
+  .visible_btn_name--visible {
+    opacity: 1; }
+
+.modelArea {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 50px 100px;
+  border: 2px solid #ccc;
+  min-height: 85vh; }
+
+.modalForm {
+  height: 100%; }
+
+.modal_btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
