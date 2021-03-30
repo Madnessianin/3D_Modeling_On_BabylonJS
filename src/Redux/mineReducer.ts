@@ -1,20 +1,28 @@
-import { connectType, dataType, elemType, pointType, stateMineType } from "./types";
+import {
+  connectType,
+  dataType,
+  elemType,
+  pointType,
+  stateMineType,
+} from "./types";
 
 const SET_DATA: string = "3dmodelingBabylonJS/SET_DATA",
   SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE",
   SET_CONNECTIONS: string = "3dmodelingBabylonJS/SET_CONNECTIONS";
 
-
 const changePoint = (point: pointType, scale: pointType): pointType => {
   const newPoint: pointType = {
     x: point.x / scale.x,
     y: point.y / scale.y,
-    z: point.z / scale.z
-  }
-  return newPoint
-}
+    z: point.z / scale.z,
+  };
+  return newPoint;
+};
 
-const createConnection = (array: Array<elemType>, scale: pointType): Array<connectType> => {
+const createConnection = (
+  array: Array<elemType>,
+  scale: pointType
+): Array<connectType> => {
   type listPoint = {
     [key: string]: pointType;
   };
@@ -88,10 +96,8 @@ const mineReducer = (
         ...state,
         dataMine: {
           ...action.data,
-          nodes: [
-            ...action.data.nodes
-          ],
-        }
+          nodes: [...action.data.nodes],
+        },
       };
     }
     case SET_SCALE_MINE: {
@@ -105,9 +111,7 @@ const mineReducer = (
     case SET_CONNECTIONS: {
       return {
         ...state,
-        connections: [
-          ...action.connections
-        ],
+        connections: [...action.connections],
       };
     }
     default: {
@@ -134,32 +138,41 @@ export const setScale = (scale: pointType): setScaleType => ({
 });
 
 type setConnectionsType = {
-  type: typeof SET_CONNECTIONS,
+  type: typeof SET_CONNECTIONS;
+  connections: Array<connectType>;
+};
+export const setConnections = (
   connections: Array<connectType>
-}
-export const setConnections = (connections: Array<connectType>): setConnectionsType => ({
+): setConnectionsType => ({
   type: SET_CONNECTIONS,
-  connections
-})
+  connections,
+});
 
 /* Thunk */
 
-export const loadData = (fileName: string): Function => async (dispatch: Function) => {
+export const loadData = (fileName: string): Function => async (
+  dispatch: Function
+) => {
   const data = await (await fetch(`http://localhost:5000/${fileName}`)).json();
   dispatch(setData(data));
-  dispatch(changeConnections())
+  dispatch(changeConnections());
 };
 
-export const changeConnections = (): Function => (dispatch: Function, getState: Function) => {
+export const changeConnections = (): Function => (
+  dispatch: Function,
+  getState: Function
+) => {
   const nodes: Array<elemType> = getState().mine.dataMine.nodes;
   const scale: pointType = getState().mine.scale;
   const connections: Array<connectType> = createConnection(nodes, scale);
   dispatch(setConnections(connections));
-}
+};
 
-export const changeScale = (scale: pointType): Function => (dispatch: Function) => {
-  dispatch(setScale(scale))
-  dispatch(changeConnections())
-}
+export const changeScale = (scale: pointType): Function => (
+  dispatch: Function
+) => {
+  dispatch(setScale(scale));
+  dispatch(changeConnections());
+};
 
 export default mineReducer;

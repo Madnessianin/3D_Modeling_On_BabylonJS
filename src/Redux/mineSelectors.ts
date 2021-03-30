@@ -1,5 +1,5 @@
-import { stateType } from "./types"
+import { stateType } from "./types";
 
 export const getConnections = (state: stateType) => {
-    return state.mine.connections
-}
+  return state.mine.connections;
+};

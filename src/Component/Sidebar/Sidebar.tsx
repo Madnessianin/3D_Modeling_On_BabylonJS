@@ -6,7 +6,7 @@ import ModalForm from "./ModalForm/ModalForm";
 
 const { Sider } = Layout;
 
-const Sidebar:FC = () => {
+const Sidebar: FC = () => {
   const [collapseMode, setCollapseMode] = useState(false);
 
   const onClickCollapseeMode = () => {

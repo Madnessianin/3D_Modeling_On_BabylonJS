@@ -5,20 +5,20 @@ import { useDispatch } from "react-redux";
 import { changeScale } from "../../../Redux/mineReducer";
 
 type ModalFormType = {
-  visible: boolean
-}
+  visible: boolean;
+};
 
 type ScaleForm = {
-  onSubmit: any
-}
+  onSubmit: any;
+};
 
 type scaleType = {
-  x: number,
-  y: number,
-  z: number
-}
+  x: number;
+  y: number;
+  z: number;
+};
 
-const ModalForm:FC<ModalFormType> = ({ visible }) => {
+const ModalForm: FC<ModalFormType> = ({ visible }) => {
   const [visibleMode, setVisibleMode] = useState(visible);
   const dispatch = useDispatch();
 
@@ -44,9 +44,7 @@ const ModalForm:FC<ModalFormType> = ({ visible }) => {
   );
 };
 
-
-
-const ScaleForm:FC<ScaleForm> = ({ onSubmit }) => {
+const ScaleForm: FC<ScaleForm> = ({ onSubmit }) => {
   return (
     <Form className="modalForm" name="scale" onFinish={onSubmit}>
       <Form.Item name="scaleX" label="Масштаб по оси X: " initialValue={100}>

@@ -5,7 +5,7 @@ import { styleBtn } from "./StyleBtn";
 import { useDispatch } from "react-redux";
 import { loadData } from "../../../Redux/mineReducer";
 
-const BtnLoader:FC = () => {
+const BtnLoader: FC = () => {
   const dispatch = useDispatch();
 
   const dispatchFile = (file: File): boolean => {

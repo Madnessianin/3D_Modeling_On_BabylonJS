@@ -4,7 +4,7 @@ import BtnLoader from "./../Common/LoaderBtn/LoaderBtn";
 
 const { Header } = Layout;
 
-const HeaderConteiner:FC = () => {
+const HeaderConteiner: FC = () => {
   return (
     <Header className="header">
       <div className="header_inner">

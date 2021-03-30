@@ -8,7 +8,7 @@ import Sidebar from "./Component/Sidebar/Sidebar";
 import Header from "./Component/Header/Header";
 const { Content, Footer } = Layout;
 
-const App:FC = () => {
+const App: FC = () => {
   return (
     <div className="app">
       <Layout style={{ minHeight: "100vh" }}>
