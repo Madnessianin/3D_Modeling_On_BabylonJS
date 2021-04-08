@@ -31,9 +31,9 @@ const calculateSection = (
 
   return {
     center: {
-      x: rounded((pointOne.point.x + X / 2) / 100, 3),
-      y: rounded((pointOne.point.y + Y / 2) / 100, 3),
-      z: rounded((pointOne.point.z + Z / 2) / 10, 3),
+      x: rounded((pointOne.point.x + X / 2) / scale.x, 3),
+      y: rounded((pointOne.point.y + Y / 2) / scale.y, 3),
+      z: rounded((pointOne.point.z + Z / 2) / scale.z, 3),
     },
     len: rounded(len / 100, 3),
     alpha: rounded(Math.acos(cosAlpha), 5),
