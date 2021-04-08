@@ -49,7 +49,6 @@ export type stateMineType = {
     nodes: Array<elemType>;
   };
   scale: pointType;
-  connections: Array<connectType>;
   mine: Array<sectionType>;
 };
 

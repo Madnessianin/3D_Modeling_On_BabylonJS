@@ -109,7 +109,6 @@ const initialState: Object = {
     y: 100,
     z: 10,
   },
-  connections: [],
   mine: [],
 };
 
