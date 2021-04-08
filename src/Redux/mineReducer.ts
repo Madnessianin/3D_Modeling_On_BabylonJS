@@ -3,26 +3,46 @@ import {
   dataType,
   elemType,
   pointType,
+  sectionType,
   stateMineType,
 } from "./types";
 
 const SET_DATA: string = "3dmodelingBabylonJS/SET_DATA",
   SET_SCALE_MINE: string = "3dmodelingBabylonJS/SET_SCALE_MINE",
-  SET_CONNECTIONS: string = "3dmodelingBabylonJS/SET_CONNECTIONS";
+  SET_MINE: string = "3dmodelingBabylonJS/SET_MINE";
 
-const changePoint = (point: pointType, scale: pointType): pointType => {
-  const newPoint: pointType = {
-    x: point.x / scale.x,
-    y: point.y / scale.y,
-    z: point.z / scale.z,
-  };
-  return newPoint;
+const rounded = (numb: number, sign: number): number => {
+  return parseFloat(numb.toFixed(sign));
 };
 
-const createConnection = (
-  array: Array<elemType>,
+const calculateSection = (
+  { pointOne, pointTwo }: connectType,
   scale: pointType
-): Array<connectType> => {
+): sectionType => {
+  const X: number = pointTwo.point.x - pointOne.point.x;
+  const Y: number = pointTwo.point.y - pointOne.point.y;
+  const Z: number = pointTwo.point.z - pointOne.point.z;
+
+  const len: number = Math.sqrt(X ** 2 + Y ** 2 + Z ** 2);
+
+  const cosAlpha: number = X / len;
+  const cosBetta: number = Y / len;
+  const cosTetta: number = Z / len;
+
+  return {
+    center: {
+      x: rounded((pointOne.point.x + X / 2) / 100, 3),
+      y: rounded((pointOne.point.y + Y / 2) / 100, 3),
+      z: rounded((pointOne.point.z + Z / 2) / 10, 3),
+    },
+    len: rounded(len / 100, 3),
+    alpha: rounded(Math.acos(cosAlpha), 5),
+    betta: rounded(Math.acos(cosBetta), 5),
+    tetta: rounded(Math.acos(cosTetta), 5),
+  };
+};
+
+const createConnection = (array: Array<elemType>): Array<connectType> => {
   type listPoint = {
     [key: string]: pointType;
   };
@@ -30,7 +50,7 @@ const createConnection = (
   let listPoint: listPoint = {};
   const arraysLinks: Array<Array<string>> = [];
   array.forEach((item) => {
-    const point = { [item.id]: changePoint(item.point, scale) };
+    const point = { [item.id]: item.point };
     listPoint = {
       ...listPoint,
       ...point,
@@ -66,6 +86,16 @@ const createConnection = (
   return connections;
 };
 
+const createMine = (
+  connections: Array<connectType>,
+  scale: pointType
+): Array<sectionType> => {
+  const mine = connections.map((item) => {
+    return calculateSection(item, scale);
+  });
+  return mine;
+};
+
 const initialState: Object = {
   dataMine: {
     id: "",
@@ -80,11 +110,12 @@ const initialState: Object = {
     z: 10,
   },
   connections: [],
+  mine: [],
 };
 
 type stateType = typeof initialState | stateMineType;
 
-type actionTypes = setDataType & setScaleType & setConnectionsType;
+type actionTypes = setDataType & setScaleType & setMineType;
 
 const mineReducer = (
   state: stateType = initialState,
@@ -108,10 +139,10 @@ const mineReducer = (
         },
       };
     }
-    case SET_CONNECTIONS: {
+    case SET_MINE: {
       return {
         ...state,
-        connections: [...action.connections],
+        mine: [...action.mine],
       };
     }
     default: {
@@ -137,15 +168,15 @@ export const setScale = (scale: pointType): setScaleType => ({
   scale,
 });
 
-type setConnectionsType = {
-  type: typeof SET_CONNECTIONS;
-  connections: Array<connectType>;
+type setMineType = {
+  type: typeof SET_MINE;
+  mine: Array<sectionType>;
 };
-export const setConnections = (
-  connections: Array<connectType>
-): setConnectionsType => ({
-  type: SET_CONNECTIONS,
-  connections,
+export const setMine = (
+  mine: Array<sectionType>
+): setMineType => ({
+  type: SET_MINE,
+  mine,
 });
 
 /* Thunk */
@@ -164,8 +195,10 @@ export const changeConnections = (): Function => (
 ) => {
   const nodes: Array<elemType> = getState().mine.dataMine.nodes;
   const scale: pointType = getState().mine.scale;
-  const connections: Array<connectType> = createConnection(nodes, scale);
-  dispatch(setConnections(connections));
+  const connections: Array<connectType> = createConnection(nodes);
+  const mine: Array<sectionType> = createMine(connections, scale)
+  dispatch(setMine(mine));
+
 };
 
 export const changeScale = (scale: pointType): Function => (

@@ -32,6 +32,14 @@ export type connectType = {
   pointTwo: connectElemType;
 };
 
+export type sectionType = {
+  center: pointType;
+  len: number;
+  alpha: number;
+  betta: number;
+  tetta: number;
+};
+
 export type stateMineType = {
   dataMine: {
     id: string;
@@ -42,6 +50,7 @@ export type stateMineType = {
   };
   scale: pointType;
   connections: Array<connectType>;
+  mine: Array<sectionType>;
 };
 
 export type stateType = {

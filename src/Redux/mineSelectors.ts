@@ -1,5 +1,6 @@
-import { stateType } from "./types";
+import { sectionType, stateType } from "./types";
 
-export const getConnections = (state: stateType) => {
-  return state.mine.connections;
+
+export const getMine = (state: stateType): Array<sectionType> => {
+  return state.mine.mine;
 };

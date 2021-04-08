@@ -5,6 +5,7 @@ import {
   StandardMaterial,
   Scene,
   Vector3,
+  Size,
 } from "@babylonjs/core";
 
 export const createCamera = (scene: Scene): void => {
@@ -12,7 +13,7 @@ export const createCamera = (scene: Scene): void => {
     "camera",
     Math.PI / 4,
     Math.PI / 3,
-    50,
+    150,
     new Vector3(0, 10, 0),
     scene
   ); // Камера (Vector3 - координаты точки(направления))
@@ -37,4 +38,20 @@ export const createGround = (scene: Scene): void => {
     scene
   );
   ground.material = new StandardMaterial("groundMaterial", scene);
+};
+
+export const createConnection = (scene: Scene) => {
+  const connection1 = MeshBuilder.CreateBox(
+    "con1",
+    { width: 1, height: 1, depth: 10 },
+    scene
+  );
+  connection1.position = new Vector3(0, 0.5, 0);
+  const connection2 = MeshBuilder.CreateBox(
+    "con1",
+    { width: 1, height: 1, depth: 10 },
+    scene
+  );
+  connection2.position = new Vector3(-1, 5, 4.5);
+  connection2.rotation.x = Math.PI / 2;
 };

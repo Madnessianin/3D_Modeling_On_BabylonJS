@@ -1,7 +1,12 @@
 import { Engine, Scene } from "@babylonjs/core";
 import React, { FC, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { createCamera, createGround, createLight } from "../../Babylon/babylon";
+import {
+  createCamera,
+  createConnection,
+  createGround,
+  createLight,
+} from "../../Babylon/babylon";
 import { getConnections } from "../../Redux/mineSelectors";
 import { stateType } from "../../Redux/types";
 
@@ -13,11 +18,12 @@ type CanvasType = {
 
 const ModelArea: FC = () => {
   const data = useSelector((state: stateType) => getConnections(state));
-  //console.log(data)
+  console.log(data);
 
   const onSceneReady = (scene: Scene) => {
     createCamera(scene); // Создание камеры
     createLight(scene); // Создание источника света
+    createConnection(scene);
     createGround(scene); // Создание земли
   };
 
