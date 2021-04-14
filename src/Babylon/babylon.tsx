@@ -7,6 +7,7 @@ import {
   Vector3,
   Size,
 } from "@babylonjs/core";
+import { sectionType } from "../Redux/types";
 
 export const createCamera = (scene: Scene): void => {
   const camera = new ArcRotateCamera(
@@ -14,10 +15,10 @@ export const createCamera = (scene: Scene): void => {
     Math.PI / 4,
     Math.PI / 3,
     150,
-    new Vector3(0, 10, 0),
+    new Vector3(-50, -40, 20),
     scene
   ); // Камера (Vector3 - координаты точки(направления))
-  camera.setTarget(Vector3.Zero()); // Направление камеры
+  camera.setTarget(new Vector3(-60,-50, 30)); // Направление камеры
   const canvas = scene.getEngine().getRenderingCanvas(); // Получение движка сцены -> получение контекстного элемента canvas
   camera.attachControl(canvas, true); // Привязка кнопок клавиатуры
   camera.upperBetaLimit = Math.PI / 2;
@@ -40,18 +41,11 @@ export const createGround = (scene: Scene): void => {
   ground.material = new StandardMaterial("groundMaterial", scene);
 };
 
-export const createConnection = (scene: Scene) => {
-  const connection1 = MeshBuilder.CreateBox(
-    "con1",
-    { width: 1, height: 1, depth: 10 },
-    scene
-  );
-  connection1.position = new Vector3(0, 0.5, 0);
-  const connection2 = MeshBuilder.CreateBox(
-    "con1",
-    { width: 1, height: 1, depth: 10 },
-    scene
-  );
-  connection2.position = new Vector3(-1, 5, 4.5);
-  connection2.rotation.x = Math.PI / 2;
+export const createConnection = (scene: Scene, mine: Array<sectionType>) => {
+  mine.forEach(item=>{
+    const section = MeshBuilder.CreateBox("", item.obj, scene);
+    section.position = new Vector3(item.center.x, item.center.z, item.center.y);
+    section.rotation.x = item.alpha,
+    section.rotation.y = item.tetta
+  })
 };

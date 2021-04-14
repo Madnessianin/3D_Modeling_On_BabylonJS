@@ -1,4 +1,4 @@
-import { Engine, Scene } from "@babylonjs/core";
+import { Engine, MeshBuilder, Scene, Vector3 } from "@babylonjs/core";
 import React, { FC, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -7,8 +7,8 @@ import {
   createGround,
   createLight,
 } from "../../Babylon/babylon";
-import { getConnections } from "../../Redux/mineSelectors";
-import { stateType } from "../../Redux/types";
+import { getMine } from "../../Redux/mineSelectors";
+import { sectionType, stateType } from "../../Redux/types";
 
 type CanvasType = {
   antialias: boolean;
@@ -17,14 +17,12 @@ type CanvasType = {
 };
 
 const ModelArea: FC = () => {
-  const data = useSelector((state: stateType) => getConnections(state));
-  console.log(data);
 
-  const onSceneReady = (scene: Scene) => {
+  const onSceneReady = (scene: Scene, data: Array<sectionType>) => {
     createCamera(scene); // Создание камеры
     createLight(scene); // Создание источника света
-    createConnection(scene);
-    createGround(scene); // Создание земли
+    createConnection(scene, data);
+    //createGround(scene); // Создание земли
   };
 
   return (
@@ -36,6 +34,7 @@ const ModelArea: FC = () => {
 
 const Canvas: FC<CanvasType> = ({ antialias, onSceneReady, id, ...rest }) => {
   const reactCanvas = useRef(null);
+  const data = useSelector((state: stateType) => getMine(state));
 
   useEffect(() => {
     if (reactCanvas.current) {
@@ -45,9 +44,9 @@ const Canvas: FC<CanvasType> = ({ antialias, onSceneReady, id, ...rest }) => {
       );
       const scene = new Scene(engine);
       if (scene.isReady()) {
-        onSceneReady(scene);
+        onSceneReady(scene, data);
       } else {
-        scene.onReadyObservable.addOnce((scene: Scene) => onSceneReady(scene));
+        scene.onReadyObservable.addOnce((scene: Scene) => onSceneReady(scene, data));
       }
       engine.runRenderLoop(() => {
         scene.render();
@@ -69,7 +68,7 @@ const Canvas: FC<CanvasType> = ({ antialias, onSceneReady, id, ...rest }) => {
         }
       };
     }
-  }, [reactCanvas]);
+  }, [reactCanvas, data]);
   return <canvas className="canvas" ref={reactCanvas} {...rest} />;
 };
 

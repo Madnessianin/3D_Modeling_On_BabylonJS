@@ -34,11 +34,17 @@ export type connectType = {
 
 export type sectionType = {
   center: pointType;
-  len: number;
+  obj: sectionParType;
   alpha: number;
   betta: number;
   tetta: number;
 };
+
+export type sectionParType = {
+  width: number,
+  height: number,
+  depth: number
+}
 
 export type stateMineType = {
   dataMine: {

@@ -3,6 +3,7 @@ import {
   dataType,
   elemType,
   pointType,
+  sectionParType,
   sectionType,
   stateMineType,
 } from "./types";
@@ -15,6 +16,33 @@ const rounded = (numb: number, sign: number): number => {
   return parseFloat(numb.toFixed(sign));
 };
 
+const maxElement = (X: number, Y:number, Z: number, len: number): sectionParType => {
+  const max = Math.max(X, Y, Z);
+  switch (max) {
+    case X: {
+      return {
+        width: len,
+        height: .1,
+        depth: .1
+      }
+    }
+    case Y: {
+      return {
+        width: .1,
+        height: .1,
+        depth: len
+      }
+    }
+    default: {
+      return {
+        width: .1,
+        height: len,
+        depth: .1
+      }
+    }
+  }
+}
+
 const calculateSection = (
   { pointOne, pointTwo }: connectType,
   scale: pointType
@@ -24,6 +52,7 @@ const calculateSection = (
   const Z: number = pointTwo.point.z - pointOne.point.z;
 
   const len: number = Math.sqrt(X ** 2 + Y ** 2 + Z ** 2);
+  const params: sectionParType = maxElement(Math.abs(X), Math.abs(Y), Math.abs(Z), rounded(len / 100, 3));
 
   const cosAlpha: number = X / len;
   const cosBetta: number = Y / len;
@@ -35,7 +64,7 @@ const calculateSection = (
       y: rounded((pointOne.point.y + Y / 2) / scale.y, 3),
       z: rounded((pointOne.point.z + Z / 2) / scale.z, 3),
     },
-    len: rounded(len / 100, 3),
+    obj: params,
     alpha: rounded(Math.acos(cosAlpha), 5),
     betta: rounded(Math.acos(cosBetta), 5),
     tetta: rounded(Math.acos(cosTetta), 5),
@@ -195,7 +224,8 @@ export const changeConnections = (): Function => (
   const nodes: Array<elemType> = getState().mine.dataMine.nodes;
   const scale: pointType = getState().mine.scale;
   const connections: Array<connectType> = createConnection(nodes);
-  const mine: Array<sectionType> = createMine(connections, scale)
+  const mine: Array<sectionType> = createMine(connections, scale);
+  console.log(mine)
   dispatch(setMine(mine));
 
 };
